@@ -9,19 +9,36 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  gap: 16px;
+  /* gap: 16px; */
+  margin-top: 20px;
 }
 .movie-container
 {
-  width: 240px;
+  position: relative;
+  width: 365px;
   height: min-content;
+  border: 1px solid gray;
+  padding: 10px;
+  box-shadow: 2px 1px 10px ;
+  gap: 16px;
+}
+.card-box
+{
+  display: flex;
 }
 .movie-poster
 {
   width: 340px;
   height: 300px;
   object-fit: cover;
+  overflow: hidden;
 }
+.movie-specs
+{
+  display: flex;
+  justify-content: space-between;
+} 
+
 .movie-name
 {
   font-size: 24px;
@@ -33,5 +50,18 @@
 }
 .movie-rating
 {
-  font-size: 18px;
+  font-size: 20px;
+  /* position: absolute;
+  right: 10px;
+  bottom: 40px; */
+
+}
+.addBox
+{
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+}
+.addBox input{
+  margin-right: 10px;
 }

@@ -7,9 +7,27 @@ import './App.css'
 // import { useState } from 'react'
 // import Button from '@mui/material/Button';
 
-import { useState } from "react"
-import Movielist from "./movielist"
-import AddMovie from './addmoviename'
+import React,{ useState } from "react"
+import AppBar from '@mui/material/AppBar';
+import Container from '@mui/material/Container';
+// import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+// import Typography from '@mui/material/Typography';
+// import Menu from '@mui/material/Menu';
+import Button from '@mui/material/Button';
+// import MenuItem from '@mui/material/MenuItem';
+
+
+import Home from './home'
+import { Navigate, Route, Routes,useNavigate} from 'react-router-dom';
+import MovieList from './movielist';
+import AddMovie from './addmoviename';
+import AddColor from './AddColor';
+import MovieDetails from './moviedetails';
+import NotFound from './notFound';
+import Header from './header';
+
 
 // // function App()
 // // {
@@ -88,27 +106,41 @@ import AddMovie from './addmoviename'
 //useState()--Hooks function ---it returns 2 values--1.current state 2.function to update state--setState()-inform react to update state
 function App()
 {
-  const [movies,setMovies]=useState([
-    {id:1,movie_name:"Joe",movie_rating:3,movie_summary:"Joe is a 2023 Indian Tamil-language romantic drama film written and directed by Hariharan Ram S. in his directorial debut and produced by Dr.D. Arulanandhu",movie_trailer:"https://www.youtube.com/embed/2lrbAHMACrM",movie_poster:"https://upload.wikimedia.org/wikipedia/en/9/96/Joe_%282023_film%29.jpg"
-    },
-    {id:2,movie_name:"ManjummalBoys",movie_rating:8,movie_summary:"Joe is a 2023 Indian Tamil-language romantic drama film written and directed by Hariharan Ram S. in his directorial debut and produced by Dr.D. Arulanandhu",movie_trailer:"https://www.youtube.com/embed/2lrbAHMACrM",movie_poster:"https://upload.wikimedia.org/wikipedia/en/9/96/Joe_%282023_film%29.jpg"
-    },
-    {id:3,movie_name:"Leo",movie_rating:5,movie_summary:"Joe is a 2023 Indian Tamil-language romantic drama film written and directed by Hariharan Ram S. in his directorial debut and produced by Dr.D. Arulanandhu",movie_trailer:"https://www.youtube.com/embed/2lrbAHMACrM",movie_poster:"https://upload.wikimedia.org/wikipedia/en/9/96/Joe_%282023_film%29.jpg"
-    }
-    ])
-    function add({id,movie_name,movie_rating,movie_poster,movie_summary,movie_trailer})
-    {
-      setMovies([...movies,{id,movie_name,movie_rating,movie_poster,movie_summary,movie_trailer}])
-    }
-    
+
+const navigate=useNavigate()
+const [movieList,setMovieList]=useState([{id:1,movie_name:"Joe",movie_rating:3,movie_summary:"Joe is a 2023 Indian Tamil-language romantic drama film written and directed by Hariharan Ram S. in his directorial debut and produced by Dr.D. Arulanandhu",movie_trailer:"https://www.youtube.com/embed/23mMdgo0prk",movie_poster:"https://upload.wikimedia.org/wikipedia/en/9/96/Joe_%282023_film%29.jpg"
+  },
+  {id:2,movie_name:"ManjummalBoys",movie_rating:8,movie_summary:"Joe is a 2023 Indian Tamil-language romantic drama film written and directed by Hariharan Ram S. in his directorial debut and produced by Dr.D. Arulanandhu",movie_trailer:"https://youtu.be/id848Ww1YLo?si=h3MoDB3ccCbwWHML",movie_poster:"https://img.etimg.com/thumb/width-1200,height-1200,imgsize-1216451,resizemode-75,msid-107930187/magazines/panache/manjummel-boys-twitter-review-chidambarams-film-delivers-a-rollercoaster-of-emotions.jpg"
+  },
+  {id:3,movie_name:"Leo",movie_rating:5,movie_summary:"Joe is a 2023 Indian Tamil-language romantic drama film written and directed by Hariharan Ram S. in his directorial debut and produced by Dr.D. Arulanandhu",movie_trailer:"https://www.youtube.com/embed/Po3jStA673E",movie_poster:"https://images.news18.com/ibnlive/uploads/2023/10/leo-poster-2023-10-b35730a42138a250e8a820b8a4f637a5.jpg"
+  }
+  ])
+
+  
   // JSX starts
   return(<div>
-    <AddMovie add={add}/>
-    <div className='movie-list'>
-      {
-        movies.map(movie=><Movielist key={movie.id} movie={movie}/>)
-      }
-    </div>
+       <AppBar position="static">
+       <Container maxWidth="xl">
+        <Toolbar>
+       <Button color='inherit' onClick={()=>navigate("/")}>Home</Button>
+       <Button color='inherit' onClick={()=>navigate("/movies")}>Movies</Button>
+       <Button color='inherit' onClick={()=>navigate("/addmovie")}>AddMovie</Button>
+       <Button color='inherit' onClick={()=>navigate("/colorgame")}>ColorGame</Button>
+
+      </Toolbar>
+      </Container>
+      </AppBar>
+      <Header/>
+      <Routes>
+        <Route path='/' element={<Home/>}/>
+        <Route path="/movies" element={<MovieList movieList={movieList}/>}/>
+        <Route path="/addmovie" element={<AddMovie movieList={movieList} setMovieList={setMovieList}/>}/>
+        <Route path="/colorgame" element={<AddColor/>}/>
+        {/* dynamically matches Route */}
+        <Route path='/movies/:id' element={<MovieDetails movieList={movieList}/>}/>
+        <Route path='/404' element={<NotFound/>}/>
+        <Route path='*' element={<Navigate replace to='/404'/>}/>
+      </Routes>
     </div>
   )
   //JSX ends
