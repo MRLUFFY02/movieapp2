@@ -27,6 +27,8 @@ import AddColor from './AddColor';
 import MovieDetails from './moviedetails';
 import NotFound from './notFound';
 import Header from './header';
+import Counter from './counter';
+import Lcm from './lcm';
 
 
 // // function App()
@@ -106,7 +108,7 @@ import Header from './header';
 //useState()--Hooks function ---it returns 2 values--1.current state 2.function to update state--setState()-inform react to update state
 function App()
 {
-
+// const [isShow,setIsShow]=useState(true)
 const navigate=useNavigate()
 const [movieList,setMovieList]=useState([{id:1,movie_name:"Joe",movie_rating:3,movie_summary:"Joe is a 2023 Indian Tamil-language romantic drama film written and directed by Hariharan Ram S. in his directorial debut and produced by Dr.D. Arulanandhu",movie_trailer:"https://www.youtube.com/embed/23mMdgo0prk",movie_poster:"https://upload.wikimedia.org/wikipedia/en/9/96/Joe_%282023_film%29.jpg"
   },
@@ -130,14 +132,18 @@ const [movieList,setMovieList]=useState([{id:1,movie_name:"Joe",movie_rating:3,m
       </Toolbar>
       </Container>
       </AppBar>
-      <Header/>
+      {/* <Header/> */}
+      {/* <button onClick={()=>setIsShow(!isShow)}>
+        {isShow?'remove':'show'} 
+        </button>
+      {isShow?<Lcm/>:""} */}
       <Routes>
         <Route path='/' element={<Home/>}/>
-        <Route path="/movies" element={<MovieList movieList={movieList}/>}/>
+        <Route path="/movies" element={<MovieList/>}/>
         <Route path="/addmovie" element={<AddMovie movieList={movieList} setMovieList={setMovieList}/>}/>
         <Route path="/colorgame" element={<AddColor/>}/>
         {/* dynamically matches Route */}
-        <Route path='/movies/:id' element={<MovieDetails movieList={movieList}/>}/>
+        <Route path='/movies/:id' element={<MovieDetails/>}/>
         <Route path='/404' element={<NotFound/>}/>
         <Route path='*' element={<Navigate replace to='/404'/>}/>
       </Routes>

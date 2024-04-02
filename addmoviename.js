@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function AddMovie({movieList,setMovieList}) 
 {
@@ -7,26 +8,38 @@ const [movie_rating,setRating]=useState("")
 const [movie_poster,setPoster]=useState("")
 const [movie_summary,setSummary]=useState("")
 const [movie_trailer,setTrailer]=useState("")
-function add({id,movie_name,movie_rating,movie_poster,movie_summary,movie_trailer})
+
+const navigate=useNavigate()
+function add()
   {
-    setMovieList([...movieList,{id,movie_name,movie_rating,movie_poster,movie_summary,movie_trailer}])
+    const newMovie={movie_name,movie_rating,movie_poster,movie_summary,movie_trailer}
+
+    console.log(newMovie);
+    fetch(`https://65d6ed7d27d9a3bc1d79a9b2.mockapi.io/movies`,{
+      method:'POST',
+      body:JSON.stringify(newMovie),
+      headers:{
+        "Content-Type":"application/json"
+      }
+    }).then(data=>data.json()).then((movie)=>{console.log(movie)
+      navigate("/movies")})
   }
 
 
   return (
     <div className='addBox'>
       Name:
-      <input placeholder='Name' onChange={e=>setName(e.target.value)}/>
+      <input placeholder='Name' autoComplete='true' onChange={e=>setName(e.target.value)}/>
       Ratting:
-      <input placeholder='rating' onChange={e=>setRating(e.target.value)}/>
+      <input placeholder='rating' autoComplete='true' onChange={e=>setRating(e.target.value)}/>
       Poster:
-      <input placeholder='poster' onChange={e=>setPoster(e.target.value)}/>
+      <input placeholder='poster' autoComplete onChange={e=>setPoster(e.target.value)}/>
       summary:
-      <input placeholder='summary' onChange={e=>setSummary(e.target.value)}/>
+      <input placeholder='summary' autoComplete onChange={e=>setSummary(e.target.value)}/>
       Trailer:
-      <input placeholder='trailer' onChange={e=>setTrailer(e.target.value)}/>
+      <input placeholder='trailer' autoComplete onChange={e=>setTrailer(e.target.value)}/>
       {/* passing data from child to parent */}
-      <button onClick={()=>add({movie_name,movie_rating,movie_poster,movie_summary,movie_trailer})}>AddMovie</button>
+      <button onClick={add}>AddMovie</button>
     </div>
   )
 }

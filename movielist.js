@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link,useNavigate } from 'react-router-dom'
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
@@ -15,20 +15,36 @@ import { red } from '@mui/material/colors';
 
 
 
- function MovieList({movieList})
+ function MovieList()
 {
+  const [movieList,setMovieList]=useState([])
+  const getMovies=()=>{
+    fetch('https://65d6ed7d27d9a3bc1d79a9b2.mockapi.io/movies').then(movies=>movies.json()).then(movies=>setMovieList(movies))
+  }
   
+    useEffect(()=>{
+      getMovies()
+    },[])
+
+    const deleteMovie=(id)=>{
+      console.log('Deleting Movies ',id);
+      fetch(`https://65d6ed7d27d9a3bc1d79a9b2.mockapi.io/movies/${id}`,{method:'DELETE'}).then(()=>getMovies())
+    }
+    const editMovie=(id)=>{
+      fetch(`https://65d6ed7d27d9a3bc1d79a9b2.mockapi.io/movies/${id}`).then(data=>data.json()).then(movie=>console.log(movie))
+    }
+    
     return(
       <div className='movie-list'>
       {
-        movieList.map((movie,index)=><Movie key={index} movie={movie}/>)
+        movieList.map(movie=><Movie key={movie.id} movie={movie} deleteButton={<button onClick={()=>deleteMovie(movie.id)}>Delete</button>} editButton={<Button onClick={()=>editMovie(movie.id)}>Edit</Button>}/>)
       }
     </div>
     )
 
 }
 
-function Movie({movie}) 
+function Movie({movie,deleteButton,editButton}) 
 {
     const [show,setShow]=useState(false)
     const [like,setLike]=useState(0)
@@ -78,8 +94,8 @@ function Movie({movie})
         <ThumbUpIcon/>
          </Badge>
         </IconButton>
-          
-          
+          {deleteButton}
+          {editButton}
           
         </CardActions>
     </Card>
