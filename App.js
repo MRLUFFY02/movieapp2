@@ -29,6 +29,7 @@ import NotFound from './notFound';
 import Header from './header';
 import Counter from './counter';
 import Lcm from './lcm';
+import Editmovie from './editmovie';
 
 
 // // function App()
@@ -144,6 +145,7 @@ const [movieList,setMovieList]=useState([{id:1,movie_name:"Joe",movie_rating:3,m
         <Route path="/colorgame" element={<AddColor/>}/>
         {/* dynamically matches Route */}
         <Route path='/movies/:id' element={<MovieDetails/>}/>
+        <Route path='/editmovie/:id' element={<Editmovie/>}/>
         <Route path='/404' element={<NotFound/>}/>
         <Route path='*' element={<Navigate replace to='/404'/>}/>
       </Routes>

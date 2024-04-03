@@ -18,6 +18,7 @@ import { red } from '@mui/material/colors';
  function MovieList()
 {
   const [movieList,setMovieList]=useState([])
+  const navigate=useNavigate()
   const getMovies=()=>{
     fetch('https://65d6ed7d27d9a3bc1d79a9b2.mockapi.io/movies').then(movies=>movies.json()).then(movies=>setMovieList(movies))
   }
@@ -30,14 +31,12 @@ import { red } from '@mui/material/colors';
       console.log('Deleting Movies ',id);
       fetch(`https://65d6ed7d27d9a3bc1d79a9b2.mockapi.io/movies/${id}`,{method:'DELETE'}).then(()=>getMovies())
     }
-    const editMovie=(id)=>{
-      fetch(`https://65d6ed7d27d9a3bc1d79a9b2.mockapi.io/movies/${id}`).then(data=>data.json()).then(movie=>console.log(movie))
-    }
+    
     
     return(
       <div className='movie-list'>
       {
-        movieList.map(movie=><Movie key={movie.id} movie={movie} deleteButton={<button onClick={()=>deleteMovie(movie.id)}>Delete</button>} editButton={<Button onClick={()=>editMovie(movie.id)}>Edit</Button>}/>)
+        movieList.map(movie=><Movie key={movie.id} movie={movie} deleteButton={<button onClick={()=>deleteMovie(movie.id)}>Delete</button>} editButton={<Button onClick={()=>navigate(`/editmovie/${movie.id}`)}>Edit</Button>}/>)
       }
     </div>
     )
