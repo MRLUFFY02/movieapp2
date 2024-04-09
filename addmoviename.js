@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-function AddMovie({movieList,setMovieList}) 
+function AddMovie() 
 {
 const [movie_name,setName]=useState("")
 const [movie_rating,setRating]=useState("")
